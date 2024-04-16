@@ -1,0 +1,9 @@
+workflowVersion: 1.0.0
+sources:
+    my-first-source:
+        inputs:
+            - location: openapi.yaml
+targets:
+    my-first-target:
+        target: go
+        source: my-first-source
