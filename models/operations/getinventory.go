@@ -7,7 +7,7 @@ import (
 )
 
 type GetInventoryResponse struct {
-	HTTPMeta components.HTTPMetadata
+	HTTPMeta components.HTTPMetadata `json:"-"`
 	// successful operation
 	Object map[string]int
 }

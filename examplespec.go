@@ -131,7 +131,6 @@ const (
 func (e ServerEnvironment) ToPointer() *ServerEnvironment {
 	return &e
 }
-
 func (e *ServerEnvironment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -170,17 +169,11 @@ func WithClient(client HTTPClient) SDKOption {
 	}
 }
 
-func withSecurity(security interface{}) func(context.Context) (interface{}, error) {
-	return func(context.Context) (interface{}, error) {
-		return security, nil
-	}
-}
-
 // WithSecurity configures the SDK to use the provided security details
 func WithSecurity(apiKey string) SDKOption {
 	return func(sdk *ExampleSpec) {
 		security := components.Security{APIKey: apiKey}
-		sdk.sdkConfiguration.Security = withSecurity(&security)
+		sdk.sdkConfiguration.Security = utils.AsSecuritySource(&security)
 	}
 }
 
@@ -205,9 +198,9 @@ func New(opts ...SDKOption) *ExampleSpec {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "1.0.0",
-			SDKVersion:        "0.0.1",
-			GenVersion:        "2.306.0",
-			UserAgent:         "speakeasy-sdk/go 0.0.1 2.306.0 1.0.0 github.com/jamietanna/speakeasy-example-spec",
+			SDKVersion:        "0.1.0",
+			GenVersion:        "2.339.1",
+			UserAgent:         "speakeasy-sdk/go 0.1.0 2.339.1 1.0.0 github.com/jamietanna/speakeasy-example-spec",
 			ServerDefaults: []map[string]string{
 				{
 					"environment": "prod",

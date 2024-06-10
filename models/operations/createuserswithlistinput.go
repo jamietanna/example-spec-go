@@ -7,7 +7,7 @@ import (
 )
 
 type CreateUsersWithListInputResponse struct {
-	HTTPMeta components.HTTPMetadata
+	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful operation
 	User *components.User
 }

@@ -19,7 +19,7 @@ func (o *GetOrderByIDRequest) GetOrderID() int64 {
 }
 
 type GetOrderByIDResponse struct {
-	HTTPMeta components.HTTPMetadata
+	HTTPMeta components.HTTPMetadata `json:"-"`
 	// successful operation
 	Order *components.Order
 }

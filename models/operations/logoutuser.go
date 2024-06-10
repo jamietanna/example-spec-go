@@ -7,7 +7,7 @@ import (
 )
 
 type LogoutUserResponse struct {
-	HTTPMeta components.HTTPMetadata
+	HTTPMeta components.HTTPMetadata `json:"-"`
 }
 
 func (o *LogoutUserResponse) GetHTTPMeta() components.HTTPMetadata {

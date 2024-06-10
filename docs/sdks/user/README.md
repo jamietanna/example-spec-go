@@ -25,8 +25,8 @@ This can only be done by the logged in user.
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
+	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	"context"
 	"log"
 )
@@ -35,9 +35,7 @@ func main() {
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
-
-    ctx := context.Background()
-    res, err := s.User.CreateUser(ctx, &components.User{
+    var request *components.User = &components.User{
         ID: speakeasyexamplespec.Int64(10),
         Username: speakeasyexamplespec.String("theUser"),
         FirstName: speakeasyexamplespec.String("John"),
@@ -46,7 +44,9 @@ func main() {
         Password: speakeasyexamplespec.String("12345"),
         Phone: speakeasyexamplespec.String("12345"),
         UserStatus: speakeasyexamplespec.Int(1),
-    })
+    }
+    ctx := context.Background()
+    res, err := s.User.CreateUser(ctx, request)
     if err != nil {
         log.Fatal(err)
     }
@@ -81,8 +81,8 @@ Creates list of users with given input array
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
+	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	"context"
 	"log"
 )
@@ -91,9 +91,7 @@ func main() {
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
-
-    ctx := context.Background()
-    res, err := s.User.CreateUsersWithListInput(ctx, []components.User{
+    var request []components.User = []components.User{
         components.User{
             ID: speakeasyexamplespec.Int64(10),
             Username: speakeasyexamplespec.String("theUser"),
@@ -104,7 +102,9 @@ func main() {
             Phone: speakeasyexamplespec.String("12345"),
             UserStatus: speakeasyexamplespec.Int(1),
         },
-    })
+    }
+    ctx := context.Background()
+    res, err := s.User.CreateUsersWithListInput(ctx, request)
     if err != nil {
         log.Fatal(err)
     }
@@ -139,7 +139,6 @@ Logs user into the system
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
 	"log"
@@ -149,12 +148,9 @@ func main() {
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
-
-
     var username *string = speakeasyexamplespec.String("<value>")
 
     var password *string = speakeasyexamplespec.String("<value>")
-
     ctx := context.Background()
     res, err := s.User.LoginUser(ctx, username, password)
     if err != nil {
@@ -195,7 +191,6 @@ Logs out current logged in user session
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
 	"log"
@@ -241,7 +236,6 @@ Get user by user name
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
 	"log"
@@ -251,10 +245,7 @@ func main() {
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
-
-
     var username string = "<value>"
-
     ctx := context.Background()
     res, err := s.User.GetUserByName(ctx, username)
     if err != nil {
@@ -294,8 +285,8 @@ This can only be done by the logged in user.
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
+	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	"context"
 	"log"
 )
@@ -304,11 +295,9 @@ func main() {
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
-
-
     var username string = "<value>"
 
-    user := &components.User{
+    var user *components.User = &components.User{
         ID: speakeasyexamplespec.Int64(10),
         Username: speakeasyexamplespec.String("theUser"),
         FirstName: speakeasyexamplespec.String("John"),
@@ -318,7 +307,6 @@ func main() {
         Phone: speakeasyexamplespec.String("12345"),
         UserStatus: speakeasyexamplespec.Int(1),
     }
-
     ctx := context.Background()
     res, err := s.User.UpdateUser(ctx, username, user)
     if err != nil {
@@ -356,7 +344,6 @@ This can only be done by the logged in user.
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
 	"log"
@@ -366,10 +353,7 @@ func main() {
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
-
-
     var username string = "<value>"
-
     ctx := context.Background()
     res, err := s.User.DeleteUser(ctx, username)
     if err != nil {

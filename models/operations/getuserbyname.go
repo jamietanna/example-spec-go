@@ -19,7 +19,7 @@ func (o *GetUserByNameRequest) GetUsername() string {
 }
 
 type GetUserByNameResponse struct {
-	HTTPMeta components.HTTPMetadata
+	HTTPMeta components.HTTPMetadata `json:"-"`
 	// successful operation
 	User *components.User
 }

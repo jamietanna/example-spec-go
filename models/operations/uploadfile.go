@@ -36,7 +36,7 @@ func (o *UploadFileRequest) GetRequestBody() []byte {
 }
 
 type UploadFileResponse struct {
-	HTTPMeta components.HTTPMetadata
+	HTTPMeta components.HTTPMetadata `json:"-"`
 	// successful operation
 	APIResponse *components.APIResponse
 }
