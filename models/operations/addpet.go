@@ -7,7 +7,7 @@ import (
 )
 
 type AddPetResponse struct {
-	HTTPMeta components.HTTPMetadata
+	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful operation
 	Pet *components.Pet
 }

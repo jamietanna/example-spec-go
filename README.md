@@ -20,7 +20,7 @@ It has been generated successfully based on your OpenAPI spec. However, it is no
 ## SDK Installation
 
 ```bash
-go get github.com/jamietanna/speakeasy-example-spec
+go get github.com/jamietanna/example-spec-go
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -43,15 +43,19 @@ func main() {
 	s := speakeasyexamplespec.New(
 		speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
 	)
-
-	ctx := context.Background()
-	res, err := s.Pet.UpdatePet(ctx, components.Pet{
+	request := components.Pet{
 		ID:   speakeasyexamplespec.Int64(10),
 		Name: "doggie",
+		Category: &components.Category{
+			ID:   speakeasyexamplespec.Int64(1),
+			Name: speakeasyexamplespec.String("Dogs"),
+		},
 		PhotoUrls: []string{
 			"<value>",
 		},
-	})
+	}
+	ctx := context.Background()
+	res, err := s.Pet.UpdatePet(ctx, request)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -124,15 +128,19 @@ func main() {
 	s := speakeasyexamplespec.New(
 		speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
 	)
-
-	ctx := context.Background()
-	res, err := s.Pet.UpdatePet(ctx, components.Pet{
+	request := components.Pet{
 		ID:   speakeasyexamplespec.Int64(10),
 		Name: "doggie",
+		Category: &components.Category{
+			ID:   speakeasyexamplespec.Int64(1),
+			Name: speakeasyexamplespec.String("Dogs"),
+		},
 		PhotoUrls: []string{
 			"<value>",
 		},
-	})
+	}
+	ctx := context.Background()
+	res, err := s.Pet.UpdatePet(ctx, request)
 	if err != nil {
 
 		var e *sdkerrors.APIErrorInvalidInput
@@ -192,15 +200,19 @@ func main() {
 		speakeasyexamplespec.WithServerIndex(0),
 		speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
 	)
-
-	ctx := context.Background()
-	res, err := s.Pet.UpdatePet(ctx, components.Pet{
+	request := components.Pet{
 		ID:   speakeasyexamplespec.Int64(10),
 		Name: "doggie",
+		Category: &components.Category{
+			ID:   speakeasyexamplespec.Int64(1),
+			Name: speakeasyexamplespec.String("Dogs"),
+		},
 		PhotoUrls: []string{
 			"<value>",
 		},
-	})
+	}
+	ctx := context.Background()
+	res, err := s.Pet.UpdatePet(ctx, request)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -234,15 +246,19 @@ func main() {
 		speakeasyexamplespec.WithServerURL("https://{environment}.petstore.io"),
 		speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
 	)
-
-	ctx := context.Background()
-	res, err := s.Pet.UpdatePet(ctx, components.Pet{
+	request := components.Pet{
 		ID:   speakeasyexamplespec.Int64(10),
 		Name: "doggie",
+		Category: &components.Category{
+			ID:   speakeasyexamplespec.Int64(1),
+			Name: speakeasyexamplespec.String("Dogs"),
+		},
 		PhotoUrls: []string{
 			"<value>",
 		},
-	})
+	}
+	ctx := context.Background()
+	res, err := s.Pet.UpdatePet(ctx, request)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -309,15 +325,19 @@ func main() {
 	s := speakeasyexamplespec.New(
 		speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
 	)
-
-	ctx := context.Background()
-	res, err := s.Pet.UpdatePet(ctx, components.Pet{
+	request := components.Pet{
 		ID:   speakeasyexamplespec.Int64(10),
 		Name: "doggie",
+		Category: &components.Category{
+			ID:   speakeasyexamplespec.Int64(1),
+			Name: speakeasyexamplespec.String("Dogs"),
+		},
 		PhotoUrls: []string{
 			"<value>",
 		},
-	})
+	}
+	ctx := context.Background()
+	res, err := s.Pet.UpdatePet(ctx, request)
 	if err != nil {
 		log.Fatal(err)
 	}

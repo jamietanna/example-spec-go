@@ -28,7 +28,7 @@ func (o *UpdateUserRequest) GetUser() *components.User {
 }
 
 type UpdateUserResponse struct {
-	HTTPMeta components.HTTPMetadata
+	HTTPMeta components.HTTPMetadata `json:"-"`
 }
 
 func (o *UpdateUserResponse) GetHTTPMeta() components.HTTPMetadata {

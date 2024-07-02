@@ -7,7 +7,7 @@ import (
 )
 
 type PlaceOrderResponse struct {
-	HTTPMeta components.HTTPMetadata
+	HTTPMeta components.HTTPMetadata `json:"-"`
 	// successful operation
 	Order *components.Order
 }

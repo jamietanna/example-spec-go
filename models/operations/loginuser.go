@@ -28,7 +28,7 @@ func (o *LoginUserRequest) GetPassword() *string {
 }
 
 type LoginUserResponse struct {
-	HTTPMeta components.HTTPMetadata
+	HTTPMeta components.HTTPMetadata `json:"-"`
 	// successful operation
 	String  *string
 	Headers map[string][]string

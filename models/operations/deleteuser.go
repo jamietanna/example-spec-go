@@ -19,7 +19,7 @@ func (o *DeleteUserRequest) GetUsername() string {
 }
 
 type DeleteUserResponse struct {
-	HTTPMeta components.HTTPMetadata
+	HTTPMeta components.HTTPMetadata `json:"-"`
 	// User deleted
 	User *components.User
 }
