@@ -24,7 +24,6 @@ Returns a map of status codes to quantities
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
 	"log"
@@ -72,8 +71,8 @@ Place a new order in the store
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
+	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	"context"
 	"log"
 )
@@ -82,14 +81,14 @@ func main() {
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
-
-    ctx := context.Background()
-    res, err := s.Store.PlaceOrder(ctx, &components.Order{
+    var request *components.Order = &components.Order{
         ID: speakeasyexamplespec.Int64(10),
         PetID: speakeasyexamplespec.Int64(198772),
         Quantity: speakeasyexamplespec.Int(7),
         Status: components.OrderStatusApproved.ToPointer(),
-    })
+    }
+    ctx := context.Background()
+    res, err := s.Store.PlaceOrder(ctx, request)
     if err != nil {
         log.Fatal(err)
     }
@@ -126,7 +125,6 @@ For valid response try integer IDs with value <= 5 or > 10. Other values will ge
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
 	"log"
@@ -136,10 +134,7 @@ func main() {
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
-
-
     var orderID int64 = 614993
-
     ctx := context.Background()
     res, err := s.Store.GetOrderByID(ctx, orderID)
     if err != nil {
@@ -179,7 +174,6 @@ For valid response try integer IDs with value < 1000. Anything above 1000 or non
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
 	"log"
@@ -189,10 +183,7 @@ func main() {
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
-
-
     var orderID int64 = 127902
-
     ctx := context.Background()
     res, err := s.Store.DeleteOrder(ctx, orderID)
     if err != nil {

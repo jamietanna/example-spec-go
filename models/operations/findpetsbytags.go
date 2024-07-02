@@ -19,7 +19,7 @@ func (o *FindPetsByTagsRequest) GetTags() []string {
 }
 
 type FindPetsByTagsResponse struct {
-	HTTPMeta components.HTTPMetadata
+	HTTPMeta components.HTTPMetadata `json:"-"`
 	// successful operation
 	Pets []components.Pet
 }

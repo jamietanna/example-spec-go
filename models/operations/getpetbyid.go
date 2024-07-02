@@ -19,7 +19,7 @@ func (o *GetPetByIDRequest) GetPetID() int64 {
 }
 
 type GetPetByIDResponse struct {
-	HTTPMeta components.HTTPMetadata
+	HTTPMeta components.HTTPMetadata `json:"-"`
 	// successful operation
 	Pet *components.Pet
 }

@@ -27,8 +27,8 @@ Update an existing pet by Id
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
+	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	"context"
 	"log"
 )
@@ -37,15 +37,19 @@ func main() {
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
-
-    ctx := context.Background()
-    res, err := s.Pet.UpdatePet(ctx, components.Pet{
+    request := components.Pet{
         ID: speakeasyexamplespec.Int64(10),
         Name: "doggie",
+        Category: &components.Category{
+            ID: speakeasyexamplespec.Int64(1),
+            Name: speakeasyexamplespec.String("Dogs"),
+        },
         PhotoUrls: []string{
             "<value>",
         },
-    })
+    }
+    ctx := context.Background()
+    res, err := s.Pet.UpdatePet(ctx, request)
     if err != nil {
         log.Fatal(err)
     }
@@ -83,8 +87,8 @@ Add a new pet to the store
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
+	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	"context"
 	"log"
 )
@@ -93,15 +97,19 @@ func main() {
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
-
-    ctx := context.Background()
-    res, err := s.Pet.AddPet(ctx, components.Pet{
+    request := components.Pet{
         ID: speakeasyexamplespec.Int64(10),
         Name: "doggie",
+        Category: &components.Category{
+            ID: speakeasyexamplespec.Int64(1),
+            Name: speakeasyexamplespec.String("Dogs"),
+        },
         PhotoUrls: []string{
             "<value>",
         },
-    })
+    }
+    ctx := context.Background()
+    res, err := s.Pet.AddPet(ctx, request)
     if err != nil {
         log.Fatal(err)
     }
@@ -136,7 +144,6 @@ Multiple status values can be provided with comma separated strings
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"github.com/jamietanna/speakeasy-example-spec/models/operations"
 	"context"
@@ -147,10 +154,7 @@ func main() {
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
-
-
     var status *operations.Status = operations.StatusAvailable.ToPointer()
-
     ctx := context.Background()
     res, err := s.Pet.FindPetsByStatus(ctx, status)
     if err != nil {
@@ -190,7 +194,6 @@ Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
 	"log"
@@ -200,12 +203,9 @@ func main() {
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
-
-
-    tags := []string{
+    var tags []string = []string{
         "<value>",
     }
-
     ctx := context.Background()
     res, err := s.Pet.FindPetsByTags(ctx, tags)
     if err != nil {
@@ -245,7 +245,6 @@ Returns a single pet
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
 	"log"
@@ -255,10 +254,7 @@ func main() {
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
-
-
     var petID int64 = 504151
-
     ctx := context.Background()
     res, err := s.Pet.GetPetByID(ctx, petID)
     if err != nil {
@@ -298,7 +294,6 @@ Deletes a pet
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
 	"log"
@@ -308,12 +303,9 @@ func main() {
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
-
-
     var petID int64 = 441876
 
     var apiKey *string = speakeasyexamplespec.String("<value>")
-
     ctx := context.Background()
     res, err := s.Pet.DeletePet(ctx, petID, apiKey)
     if err != nil {
@@ -354,7 +346,6 @@ uploads an image
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
 	"log"
@@ -364,14 +355,11 @@ func main() {
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
-
-
     var petID int64 = 565380
 
     var additionalMetadata *string = speakeasyexamplespec.String("<value>")
 
     var requestBody []byte = []byte("0x7cca7F47Dd")
-
     ctx := context.Background()
     res, err := s.Pet.UploadFile(ctx, petID, additionalMetadata, requestBody)
     if err != nil {

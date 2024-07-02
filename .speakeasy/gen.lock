@@ -3,18 +3,25 @@ id: 51f8279d-37a9-476f-bc21-1c484ab0fc2e
 management:
   docChecksum: 7c524b4be7afdadc4b2f448072865ac4
   docVersion: 1.0.0
-  speakeasyVersion: 1.253.1
-  generationVersion: 2.306.0
-  releaseVersion: 0.0.1
-  configChecksum: ff604beee33830e30d93526169b90c26
+  speakeasyVersion: 1.325.0
+  generationVersion: 2.356.0
+  releaseVersion: 0.1.0
+  configChecksum: 4f07207620d056c9be98de711326bacf
+  repoURL: https://github.com/jamietanna/example-spec-go.git
+  installationURL: https://github.com/jamietanna/example-spec-go
 features:
   go:
+    additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.4
-    core: 3.4.6
+    core: 3.4.14
     flattening: 2.81.1
     globalSecurity: 2.82.9
+    globalSecurityCallbacks: 0.1.0
+    globalSecurityFlattening: 0.1.0
     globalServerURLs: 2.82.2
-    responseFormat: 0.1.0
+    intellisenseMarkdownSupport: 0.1.0
+    responseFormat: 0.1.2
+    sdkHooks: 0.1.0
 generatedFiles:
   - pet.go
   - store.go

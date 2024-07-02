@@ -7,16 +7,9 @@ import (
 )
 
 type DeletePetRequest struct {
-	// Pet id to delete
-	PetID  int64   `pathParam:"style=simple,explode=false,name=petId"`
 	APIKey *string `header:"style=simple,explode=false,name=api_key"`
-}
-
-func (o *DeletePetRequest) GetPetID() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.PetID
+	// Pet id to delete
+	PetID int64 `pathParam:"style=simple,explode=false,name=petId"`
 }
 
 func (o *DeletePetRequest) GetAPIKey() *string {
@@ -26,8 +19,15 @@ func (o *DeletePetRequest) GetAPIKey() *string {
 	return o.APIKey
 }
 
+func (o *DeletePetRequest) GetPetID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.PetID
+}
+
 type DeletePetResponse struct {
-	HTTPMeta components.HTTPMetadata
+	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Pet deleted
 	Pet *components.Pet
 }

@@ -13,15 +13,19 @@ func main() {
 	s := speakeasyexamplespec.New(
 		speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
 	)
-
-	ctx := context.Background()
-	res, err := s.Pet.UpdatePet(ctx, components.Pet{
+	request := components.Pet{
 		ID:   speakeasyexamplespec.Int64(10),
 		Name: "doggie",
+		Category: &components.Category{
+			ID:   speakeasyexamplespec.Int64(1),
+			Name: speakeasyexamplespec.String("Dogs"),
+		},
 		PhotoUrls: []string{
 			"<value>",
 		},
-	})
+	}
+	ctx := context.Background()
+	res, err := s.Pet.UpdatePet(ctx, request)
 	if err != nil {
 		log.Fatal(err)
 	}

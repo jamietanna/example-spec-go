@@ -19,7 +19,7 @@ func (o *DeleteOrderRequest) GetOrderID() int64 {
 }
 
 type DeleteOrderResponse struct {
-	HTTPMeta components.HTTPMetadata
+	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Order deleted
 	Order *components.Order
 }
