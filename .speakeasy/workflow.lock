@@ -1,0 +1,29 @@
+speakeasyVersion: 1.650.0
+sources:
+    my-first-source:
+        sourceNamespace: my-first-source
+        sourceRevisionDigest: sha256:c0abf47fe537f3eb15528376cec88fe66ae9a46e83f8b425716a17ddc1223d76
+        sourceBlobDigest: sha256:7b126ce60acc4ea6bef9f51a64030821d47ee20d7595c99dc6e6be0494665648
+        tags:
+            - latest
+            - speakeasy-sdk-regen-1718151735
+            - 1.0.0
+targets:
+    my-first-target:
+        source: my-first-source
+        sourceNamespace: my-first-source
+        sourceRevisionDigest: sha256:c0abf47fe537f3eb15528376cec88fe66ae9a46e83f8b425716a17ddc1223d76
+        sourceBlobDigest: sha256:7b126ce60acc4ea6bef9f51a64030821d47ee20d7595c99dc6e6be0494665648
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: latest
+    sources:
+        my-first-source:
+            inputs:
+                - location: openapi.yaml
+            registry:
+                location: registry.speakeasyapi.dev/jamietanna/jamietanna/my-first-source
+    targets:
+        my-first-target:
+            target: go
+            source: my-first-source
