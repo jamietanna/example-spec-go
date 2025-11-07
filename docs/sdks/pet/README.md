@@ -7,6 +7,7 @@ Everything about your Pets
 
 Find out more
 <http://swagger.io>
+
 ### Available Operations
 
 * [UpdatePet](#updatepet) - Update an existing pet
@@ -23,27 +24,33 @@ Update an existing pet by Id
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="updatePet" method="put" path="/pet" -->
 ```go
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
-	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
+	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
+	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	"log"
 )
 
 func main() {
+    ctx := context.Background()
+
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
 
-    ctx := context.Background()
     res, err := s.Pet.UpdatePet(ctx, components.Pet{
-        ID: speakeasyexamplespec.Int64(10),
+        ID: speakeasyexamplespec.Pointer[int64](10),
         Name: "doggie",
+        Category: &components.Category{
+            ID: speakeasyexamplespec.Pointer[int64](1),
+            Name: speakeasyexamplespec.Pointer("Dogs"),
+        },
         PhotoUrls: []string{
-            "<value>",
+            "<value 1>",
         },
     })
     if err != nil {
@@ -57,21 +64,24 @@ func main() {
 
 ### Parameters
 
-| Parameter                                             | Type                                                  | Required                                              | Description                                           |
-| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| `ctx`                                                 | [context.Context](https://pkg.go.dev/context#Context) | :heavy_check_mark:                                    | The context to use for the request.                   |
-| `request`                                             | [components.Pet](../../models/components/pet.md)      | :heavy_check_mark:                                    | The request object to use for the request.            |
-
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `request`                                                | [components.Pet](../../models/components/pet.md)         | :heavy_check_mark:                                       | The request object to use for the request.               |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
 
 **[*operations.UpdatePetResponse](../../models/operations/updatepetresponse.md), error**
-| Error Object                   | Status Code                    | Content Type                   |
+
+### Errors
+
+| Error Type                     | Status Code                    | Content Type                   |
 | ------------------------------ | ------------------------------ | ------------------------------ |
 | sdkerrors.APIErrorInvalidInput | 400                            | application/json               |
 | sdkerrors.APIErrorUnauthorized | 401                            | application/json               |
 | sdkerrors.APIErrorNotFound     | 404                            | application/json               |
-| sdkerrors.SDKError             | 4xx-5xx                        | */*                            |
+| sdkerrors.SDKError             | 4XX, 5XX                       | \*/\*                          |
 
 ## AddPet
 
@@ -79,27 +89,35 @@ Add a new pet to the store
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="addPet" method="post" path="/pet" -->
 ```go
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
-	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
+	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
+	"github.com/jamietanna/speakeasy-example-spec/models/components"
 	"log"
 )
 
 func main() {
+    ctx := context.Background()
+
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
 
-    ctx := context.Background()
     res, err := s.Pet.AddPet(ctx, components.Pet{
-        ID: speakeasyexamplespec.Int64(10),
+        ID: speakeasyexamplespec.Pointer[int64](10),
         Name: "doggie",
+        Category: &components.Category{
+            ID: speakeasyexamplespec.Pointer[int64](1),
+            Name: speakeasyexamplespec.Pointer("Dogs"),
+        },
         PhotoUrls: []string{
-            "<value>",
+            "<value 1>",
+            "<value 2>",
+            "<value 3>",
         },
     })
     if err != nil {
@@ -113,18 +131,21 @@ func main() {
 
 ### Parameters
 
-| Parameter                                             | Type                                                  | Required                                              | Description                                           |
-| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| `ctx`                                                 | [context.Context](https://pkg.go.dev/context#Context) | :heavy_check_mark:                                    | The context to use for the request.                   |
-| `request`                                             | [components.Pet](../../models/components/pet.md)      | :heavy_check_mark:                                    | The request object to use for the request.            |
-
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `request`                                                | [components.Pet](../../models/components/pet.md)         | :heavy_check_mark:                                       | The request object to use for the request.               |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
 
 **[*operations.AddPetResponse](../../models/operations/addpetresponse.md), error**
-| Error Object       | Status Code        | Content Type       |
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 4xx-5xx            | */*                |
+| sdkerrors.SDKError | 4XX, 5XX           | \*/\*              |
 
 ## FindPetsByStatus
 
@@ -132,27 +153,25 @@ Multiple status values can be provided with comma separated strings
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="findPetsByStatus" method="get" path="/pet/findByStatus" -->
 ```go
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
+	"context"
 	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"github.com/jamietanna/speakeasy-example-spec/models/operations"
-	"context"
 	"log"
 )
 
 func main() {
+    ctx := context.Background()
+
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
 
-
-    var status *operations.Status = operations.StatusAvailable.ToPointer()
-
-    ctx := context.Background()
-    res, err := s.Pet.FindPetsByStatus(ctx, status)
+    res, err := s.Pet.FindPetsByStatus(ctx, operations.StatusAvailable.ToPointer())
     if err != nil {
         log.Fatal(err)
     }
@@ -164,21 +183,24 @@ func main() {
 
 ### Parameters
 
-| Parameter                                               | Type                                                    | Required                                                | Description                                             |
-| ------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- |
-| `ctx`                                                   | [context.Context](https://pkg.go.dev/context#Context)   | :heavy_check_mark:                                      | The context to use for the request.                     |
-| `status`                                                | [*operations.Status](../../models/operations/status.md) | :heavy_minus_sign:                                      | Status values that need to be considered for filter     |
-
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `status`                                                 | [*operations.Status](../../models/operations/status.md)  | :heavy_minus_sign:                                       | Status values that need to be considered for filter      |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
 
 **[*operations.FindPetsByStatusResponse](../../models/operations/findpetsbystatusresponse.md), error**
-| Error Object                   | Status Code                    | Content Type                   |
+
+### Errors
+
+| Error Type                     | Status Code                    | Content Type                   |
 | ------------------------------ | ------------------------------ | ------------------------------ |
 | sdkerrors.APIErrorInvalidInput | 400                            | application/json               |
 | sdkerrors.APIErrorUnauthorized | 401                            | application/json               |
 | sdkerrors.APIErrorNotFound     | 404                            | application/json               |
-| sdkerrors.SDKError             | 4xx-5xx                        | */*                            |
+| sdkerrors.SDKError             | 4XX, 5XX                       | \*/\*                          |
 
 ## FindPetsByTags
 
@@ -186,28 +208,24 @@ Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="findPetsByTags" method="get" path="/pet/findByTags" -->
 ```go
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
-	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
+	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"log"
 )
 
 func main() {
+    ctx := context.Background()
+
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
 
-
-    tags := []string{
-        "<value>",
-    }
-
-    ctx := context.Background()
-    res, err := s.Pet.FindPetsByTags(ctx, tags)
+    res, err := s.Pet.FindPetsByTags(ctx, nil)
     if err != nil {
         log.Fatal(err)
     }
@@ -219,21 +237,24 @@ func main() {
 
 ### Parameters
 
-| Parameter                                             | Type                                                  | Required                                              | Description                                           |
-| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| `ctx`                                                 | [context.Context](https://pkg.go.dev/context#Context) | :heavy_check_mark:                                    | The context to use for the request.                   |
-| `tags`                                                | []*string*                                            | :heavy_minus_sign:                                    | Tags to filter by                                     |
-
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `tags`                                                   | []*string*                                               | :heavy_minus_sign:                                       | Tags to filter by                                        |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
 
 **[*operations.FindPetsByTagsResponse](../../models/operations/findpetsbytagsresponse.md), error**
-| Error Object                   | Status Code                    | Content Type                   |
+
+### Errors
+
+| Error Type                     | Status Code                    | Content Type                   |
 | ------------------------------ | ------------------------------ | ------------------------------ |
 | sdkerrors.APIErrorInvalidInput | 400                            | application/json               |
 | sdkerrors.APIErrorUnauthorized | 401                            | application/json               |
 | sdkerrors.APIErrorNotFound     | 404                            | application/json               |
-| sdkerrors.SDKError             | 4xx-5xx                        | */*                            |
+| sdkerrors.SDKError             | 4XX, 5XX                       | \*/\*                          |
 
 ## GetPetByID
 
@@ -241,26 +262,24 @@ Returns a single pet
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="getPetById" method="get" path="/pet/{petId}" -->
 ```go
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
-	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
+	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"log"
 )
 
 func main() {
+    ctx := context.Background()
+
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
 
-
-    var petID int64 = 504151
-
-    ctx := context.Background()
-    res, err := s.Pet.GetPetByID(ctx, petID)
+    res, err := s.Pet.GetPetByID(ctx, 311674)
     if err != nil {
         log.Fatal(err)
     }
@@ -272,21 +291,24 @@ func main() {
 
 ### Parameters
 
-| Parameter                                             | Type                                                  | Required                                              | Description                                           |
-| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| `ctx`                                                 | [context.Context](https://pkg.go.dev/context#Context) | :heavy_check_mark:                                    | The context to use for the request.                   |
-| `petID`                                               | *int64*                                               | :heavy_check_mark:                                    | ID of pet to return                                   |
-
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `petID`                                                  | *int64*                                                  | :heavy_check_mark:                                       | ID of pet to return                                      |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
 
 **[*operations.GetPetByIDResponse](../../models/operations/getpetbyidresponse.md), error**
-| Error Object                   | Status Code                    | Content Type                   |
+
+### Errors
+
+| Error Type                     | Status Code                    | Content Type                   |
 | ------------------------------ | ------------------------------ | ------------------------------ |
 | sdkerrors.APIErrorInvalidInput | 400                            | application/json               |
 | sdkerrors.APIErrorUnauthorized | 401                            | application/json               |
 | sdkerrors.APIErrorNotFound     | 404                            | application/json               |
-| sdkerrors.SDKError             | 4xx-5xx                        | */*                            |
+| sdkerrors.SDKError             | 4XX, 5XX                       | \*/\*                          |
 
 ## DeletePet
 
@@ -294,28 +316,24 @@ Deletes a pet
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="deletePet" method="delete" path="/pet/{petId}" -->
 ```go
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
-	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
+	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"log"
 )
 
 func main() {
+    ctx := context.Background()
+
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
 
-
-    var petID int64 = 441876
-
-    var apiKey *string = speakeasyexamplespec.String("<value>")
-
-    ctx := context.Background()
-    res, err := s.Pet.DeletePet(ctx, petID, apiKey)
+    res, err := s.Pet.DeletePet(ctx, 818965, nil)
     if err != nil {
         log.Fatal(err)
     }
@@ -327,22 +345,25 @@ func main() {
 
 ### Parameters
 
-| Parameter                                             | Type                                                  | Required                                              | Description                                           |
-| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| `ctx`                                                 | [context.Context](https://pkg.go.dev/context#Context) | :heavy_check_mark:                                    | The context to use for the request.                   |
-| `petID`                                               | *int64*                                               | :heavy_check_mark:                                    | Pet id to delete                                      |
-| `apiKey`                                              | **string*                                             | :heavy_minus_sign:                                    | N/A                                                   |
-
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `petID`                                                  | *int64*                                                  | :heavy_check_mark:                                       | Pet id to delete                                         |
+| `apiKey`                                                 | **string*                                                | :heavy_minus_sign:                                       | N/A                                                      |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
 
 **[*operations.DeletePetResponse](../../models/operations/deletepetresponse.md), error**
-| Error Object                   | Status Code                    | Content Type                   |
+
+### Errors
+
+| Error Type                     | Status Code                    | Content Type                   |
 | ------------------------------ | ------------------------------ | ------------------------------ |
 | sdkerrors.APIErrorInvalidInput | 400                            | application/json               |
 | sdkerrors.APIErrorUnauthorized | 401                            | application/json               |
 | sdkerrors.APIErrorNotFound     | 404                            | application/json               |
-| sdkerrors.SDKError             | 4xx-5xx                        | */*                            |
+| sdkerrors.SDKError             | 4XX, 5XX                       | \*/\*                          |
 
 ## UploadFile
 
@@ -350,30 +371,24 @@ uploads an image
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="uploadFile" method="post" path="/pet/{petId}/uploadImage" -->
 ```go
 package main
 
 import(
-	"github.com/jamietanna/speakeasy-example-spec/models/components"
-	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"context"
+	speakeasyexamplespec "github.com/jamietanna/speakeasy-example-spec"
 	"log"
 )
 
 func main() {
+    ctx := context.Background()
+
     s := speakeasyexamplespec.New(
         speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
 
-
-    var petID int64 = 565380
-
-    var additionalMetadata *string = speakeasyexamplespec.String("<value>")
-
-    var requestBody []byte = []byte("0x7cca7F47Dd")
-
-    ctx := context.Background()
-    res, err := s.Pet.UploadFile(ctx, petID, additionalMetadata, requestBody)
+    res, err := s.Pet.UploadFile(ctx, 150516, nil, nil)
     if err != nil {
         log.Fatal(err)
     }
@@ -385,17 +400,20 @@ func main() {
 
 ### Parameters
 
-| Parameter                                             | Type                                                  | Required                                              | Description                                           |
-| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| `ctx`                                                 | [context.Context](https://pkg.go.dev/context#Context) | :heavy_check_mark:                                    | The context to use for the request.                   |
-| `petID`                                               | *int64*                                               | :heavy_check_mark:                                    | ID of pet to update                                   |
-| `additionalMetadata`                                  | **string*                                             | :heavy_minus_sign:                                    | Additional Metadata                                   |
-| `requestBody`                                         | *[]byte*                                              | :heavy_minus_sign:                                    | N/A                                                   |
-
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `petID`                                                  | *int64*                                                  | :heavy_check_mark:                                       | ID of pet to update                                      |
+| `additionalMetadata`                                     | **string*                                                | :heavy_minus_sign:                                       | Additional Metadata                                      |
+| `requestBody`                                            | **any*                                                   | :heavy_minus_sign:                                       | N/A                                                      |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
 
 **[*operations.UploadFileResponse](../../models/operations/uploadfileresponse.md), error**
-| Error Object       | Status Code        | Content Type       |
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 4xx-5xx            | */*                |
+| sdkerrors.SDKError | 4XX, 5XX           | \*/\*              |

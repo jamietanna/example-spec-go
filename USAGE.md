@@ -10,16 +10,21 @@ import (
 )
 
 func main() {
+	ctx := context.Background()
+
 	s := speakeasyexamplespec.New(
 		speakeasyexamplespec.WithSecurity("<YOUR_API_KEY_HERE>"),
 	)
 
-	ctx := context.Background()
 	res, err := s.Pet.UpdatePet(ctx, components.Pet{
-		ID:   speakeasyexamplespec.Int64(10),
+		ID:   speakeasyexamplespec.Pointer[int64](10),
 		Name: "doggie",
+		Category: &components.Category{
+			ID:   speakeasyexamplespec.Pointer[int64](1),
+			Name: speakeasyexamplespec.Pointer("Dogs"),
+		},
 		PhotoUrls: []string{
-			"<value>",
+			"<value 1>",
 		},
 	})
 	if err != nil {
